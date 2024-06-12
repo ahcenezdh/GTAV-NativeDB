@@ -23,6 +23,9 @@ function NativeDefinition({ name, params, returnType, sx, noWrap = false, nameCo
     if (nativeDisplayMode === 'TS') {
       return toPascalCase(name, '\u200b')
     }
+    if (nativeDisplayMode === 'Lua') {
+      return toPascalCase(name, '\u200b')
+    }
     return name.replace(/_/g, '_\u200b')
   }, [ name, nativeDisplayMode ])
   const { extensions } = useTheme()
@@ -61,14 +64,23 @@ function NativeDefinition({ name, params, returnType, sx, noWrap = false, nameCo
         <NativeParamsEx params={params} />
       )}
 
-      {((nativeDisplayMode === 'UML' || nativeDisplayMode === 'TS') && (displayVoidReturnType || (returnType !== 'void' && returnType !== 'VOID'))) && (
+      {(nativeDisplayMode === 'TS' && (displayVoidReturnType || (returnType !== 'void' && returnType !== 'VOID'))) && (
         <Box component="span" sx={{ color: extensions.symbolColor }}>
           :
 &nbsp;
-          <NativeType popover={!noWrap} type={nativeDisplayMode === 'TS' ? convertTypeToTS(returnType, nativeTypes) : returnType} />
+          <NativeType popover={!noWrap} type={convertTypeToTS(returnType, nativeTypes)} />
         </Box>
       )}
+
+      {/* {(nativeDisplayMode === 'Lua' && (displayVoidReturnType || (returnType !== 'void' && returnType !== 'VOID'))) && (
+        <Box component="span" sx={{ color: extensions.symbolColor }}>
+          :
+&nbsp;
+          <NativeType popover={!noWrap} type={convertTypeToLua(returnType, nativeTypes)} />
+        </Box>
+      )} */}
     </Typography>
   )
 }
+
 export default memo(NativeDefinition)

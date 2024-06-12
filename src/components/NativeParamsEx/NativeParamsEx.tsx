@@ -36,7 +36,7 @@ export default function NativeParamsEx({ params, ...rest }: NativeParamsExProps)
                 {name}
               </Box>
 
-              {(nativeDisplayMode === 'UML' || nativeDisplayMode === 'TS') && (
+              {(nativeDisplayMode === 'TS') && (
                 <Fragment>
                   :&nbsp;
                   <NativeType type={nativeDisplayMode === 'TS' ? convertTypeToTS(type, nativeTypes) : type} popover />

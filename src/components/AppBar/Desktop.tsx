@@ -37,7 +37,6 @@ function Desktop({ ...rest }: AppBarProps) {
   const actions: AppBarActionProps[] = useMemo(() => [ ...(settings.actions ?? []) ], [ settings ])
 
   const title = useSelectedGameContext() === Game.GrandTheftAuto5 ? 'GTA5 Native Reference' : 'RDR3 Native Reference'
-  const generateCodeUrl = useGameUrl('/generate-code')
   const nativesUrl = useGameUrl('/natives')
 
   return (
@@ -82,24 +81,7 @@ function Desktop({ ...rest }: AppBarProps) {
             {stats.namespaces}&nbsp;{'| '}
             Natives:&nbsp;
             {stats.natives}&nbsp;{'| '}
-            Comments:&nbsp;
-            {stats.comments}&nbsp;{'| '}
-            Known names:&nbsp;
-            {stats.knownNames.confirmed}
-            {' '}
-            (
-            {stats.knownNames.total}
-            )&nbsp;
-            {'| '}
 
-            <Link
-              color="inherit"
-              component={RouterLink}
-              to={generateCodeUrl}
-              underline="hover"
-            >
-              Generate&nbsp;code
-            </Link>
           </Typography>
         </Toolbar>
       </MaterialAppBar>

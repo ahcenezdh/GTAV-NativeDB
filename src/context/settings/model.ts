@@ -8,7 +8,7 @@ export enum NativeSources {
   SpecialData = 'special'
 }
 
-export type NativeDisplayMode = 'C' | 'UML' | 'TS'
+export type NativeDisplayMode = 'C' | 'TS' | 'Lua' | 'CS'
 
 export type NativeOrdering = 'registration' | 'alphabetical'
 

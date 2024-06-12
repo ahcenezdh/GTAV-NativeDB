@@ -1,4 +1,4 @@
-import { Container, Paper, Typography, Tab, Divider, Box } from '@mui/material'
+import { Container, Paper, Tab, Divider, Box } from '@mui/material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { memo, SyntheticEvent } from 'react'
 import { useCallback } from 'react'
@@ -7,6 +7,7 @@ import CPlusPlus from './CPlusPlus'
 import CSharpEnum from './CSharpEnum'
 import Rust from './Rust'
 import TypeScript from './TypeScript'
+import Lua from './Lua'
 import { useGameUrl } from '../../hooks'
 
 function GenerateCodePage() {
@@ -27,9 +28,9 @@ function GenerateCodePage() {
       }}
     >
       <Container maxWidth="lg">
-        <Typography component="h1" variant="h4" gutterBottom>
+        {/* <Typography component="h1" variant="h4" gutterBottom>
           Generate Code
-        </Typography>
+        </Typography> */}
 
         <Paper>
           <TabContext value={language}>
@@ -58,6 +59,10 @@ function GenerateCodePage() {
 
             <TabPanel value="ts">
               <TypeScript />
+            </TabPanel>
+
+            <TabPanel value="lua">
+              <Lua />
             </TabPanel>
 
             <TabPanel value="shvdn">

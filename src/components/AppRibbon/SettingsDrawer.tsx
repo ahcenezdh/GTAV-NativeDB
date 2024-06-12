@@ -1,8 +1,7 @@
 import { CloseOutlined as CloseIcon } from '@mui/icons-material'
-import { Box, Checkbox, Divider, Drawer, FormControlLabel, IconButton, Link, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
-import { Fragment, useCallback } from 'react'
+import { Box, Checkbox, Divider, Drawer, FormControlLabel, IconButton, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import { useCallback } from 'react'
 import { useIsSmallDisplay, useSettings } from '../../hooks'
-import LocalFileUpload from '../LocalFileUpload/LocalFileUpload'
 import ThemeManager from '../ThemeManager'
 import ThemeSelector from '../ThemeSelector'
 import { useSettingsContext } from '../../context'
@@ -17,12 +16,6 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
   const settings = useSettings()
   const { patchSettings } = useSettingsContext()
 
-  const handleSourcesChanged = useCallback((_: unknown, value: unknown) => {
-    if (value === undefined || Array.isArray(value)) {
-      patchSettings({ sources: value })
-    }
-  }, [ patchSettings ])
-
   const handleNativeOrderingChanged = useCallback((_: unknown, value: unknown) => {
     if (value === 'registration' || value === 'alphabetical') {
       patchSettings({ nativeOrdering: value })
@@ -30,7 +23,7 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
   }, [ patchSettings ])
 
   const handleListDisplayModeChanged = useCallback((_: unknown, value: unknown) => {
-    if (value === 'C' || value === 'UML' || value === 'TS') {
+    if (value === 'C' || value === 'TS' || value === 'Lua') {
       patchSettings({ nativeDisplayMode: value })
     }
   }, [ patchSettings ])
@@ -43,9 +36,9 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
     patchSettings({ nativeTypes: e.target.checked })
   }, [ patchSettings ])
 
-  const handleCompactVectorsChanged = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    patchSettings({ compactVectors: e.target.checked })
-  }, [ patchSettings ])
+  // const handleCompactVectorsChanged = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  //   patchSettings({ compactVectors: e.target.checked })
+  // }, [ patchSettings ])
 
   const handleClose = useCallback(() => {
     onClose(false)
@@ -91,35 +84,6 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
 
           <div>
             <Typography variant="body1" gutterBottom>
-              Sources
-            </Typography>
-
-            <ToggleButtonGroup
-              color="primary"
-              onChange={handleSourcesChanged}
-              value={settings.sources}
-              fullWidth
-            >
-              <ToggleButton value="alloc8or" disabled>
-                Alloc8or
-              </ToggleButton>
-
-              <ToggleButton value="dottiedot">
-                DottieDot
-              </ToggleButton>
-
-              <ToggleButton value="fivem">
-                FiveM
-              </ToggleButton>
-
-              <ToggleButton value="special">
-                Special
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </div>
-
-          <div>
-            <Typography variant="body1" gutterBottom>
               Native Ordering
             </Typography>
 
@@ -156,8 +120,9 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
                 C Style
               </ToggleButton>
 
-              <ToggleButton value="UML">
-                UML Style
+
+              <ToggleButton value="Lua">
+                Lua Style
               </ToggleButton>
 
               <ToggleButton value="TS">
@@ -165,18 +130,8 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
               </ToggleButton>
             </ToggleButtonGroup>
 
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={settings.compactVectors}
-                  onChange={handleCompactVectorsChanged}
-                />
-              }
-              label="Compact Vectors"
-              sx={{ userSelect: 'none' }}
-            />
 
-            {(settings.nativeDisplayMode === 'UML' || settings.nativeDisplayMode === 'TS') && (
+            {(settings.nativeDisplayMode === 'TS') && (
               <FormControlLabel
                 control={
                   <Checkbox
@@ -201,32 +156,6 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
                 sx={{ userSelect: 'none' }}
               />
             )}
-          </div>
-
-          <div>
-            <Typography variant="body1" gutterBottom>
-              Special Data
-            </Typography>
-
-            <LocalFileUpload
-              helpText={(
-                <Fragment>
-                  Make sure the json matches
-                  {' '}
-
-                  <Link
-                    href="https://github.com/DottieDot/GTAV-NativeDB/blob/master/special-schema.json"
-                    target="_blank"
-                    underline="hover"
-                  >
-                    this schema
-                  </Link>
-                  .
-                </Fragment>
-              )}
-              label="special.json"
-              storeAs="special.json"
-            />
           </div>
 
           <div>

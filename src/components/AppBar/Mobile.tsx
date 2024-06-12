@@ -1,5 +1,5 @@
 import { AppBar as MaterialAppBar, Box, IconButton, Link, ListItemIcon, Menu, MenuItem, Toolbar, Typography } from '@mui/material'
-import { MoreVert as MoreIcon,  ShowChart as StatsIcon, Code as CodeIcon } from '@mui/icons-material'
+import { MoreVert as MoreIcon,  ShowChart as StatsIcon } from '@mui/icons-material'
 import React, { MouseEvent, MouseEventHandler, useCallback, useMemo, useState } from 'react'
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import { AppBarAction as AppBarActionProps } from '.'
@@ -68,12 +68,12 @@ function Mobile({ ...rest }: AppBarProps) {
       text:        'Stats',
       mobileIcon:  StatsIcon,
       buttonProps: { onClick: handleStatsDialogOpen }
-    },
-    {
-      text:        'Generate Code',
-      mobileIcon:  CodeIcon,
-      buttonProps: { href: generateCodeUrl }
     }
+    // {
+    //   text:        'Generate Code',
+    //   mobileIcon:  CodeIcon,
+    //   buttonProps: { href: generateCodeUrl }
+    // }
   ], [ settings, handleStatsDialogOpen, generateCodeUrl ])
 
   const shortTitle = useSelectedGameContext() === Game.GrandTheftAuto5 ? 'GTA5 NDB' : 'RDR3 NDB'

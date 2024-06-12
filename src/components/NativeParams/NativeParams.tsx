@@ -33,12 +33,6 @@ export default function NativeParams({ params, ...rest }: NativeParamsProps) {
             {name}
           </Box>
 
-          {(nativeDisplayMode === 'UML') && (
-            <Fragment>
-              :&nbsp;
-              <NativeType type={type} />
-            </Fragment>
-          )}
 
           {(nativeDisplayMode === 'TS') && (
             <Fragment>
