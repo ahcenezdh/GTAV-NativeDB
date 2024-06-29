@@ -3,9 +3,9 @@ import { LinkSharp as ShareIcon, OpenInNewSharp as OpenInNewSharpIcon } from '@m
 import _ from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
 import { createShareUrl, toPascalCase } from '../../common'
-import { CodeExamples, NativeComment, NativeDefinition, NativeDetails, NativeUsage } from '../../components'
+import { CodeExamples, NativeComment, NativeDefinition, NativeDetails } from '../../components'
 import { useCopyToClipboard, useIsSmallDisplay, useLastNotNull, useNative, useSettings } from '../../hooks'
-import { Game, NativeSources, SelectedGameProvider, useSelectedGameContext } from '../../context'
+import { Game, SelectedGameProvider, useSelectedGameContext } from '../../context'
 import NativeNotFound from './NativeNotFound'
 import NoNativeSelected from './NoNativeSelected'
 
@@ -16,6 +16,7 @@ interface NativeInfoProps {
 export default function NativeInfo({ native: nativeHashParam }: NativeInfoProps) {
   const nativeHashNotNull = useLastNotNull(nativeHashParam)
   const [ usageNotFound, setUsageNotFound ] = useState(false)
+  console.log(usageNotFound)
   const settings = useSettings()
   const isSmall = useIsSmallDisplay()
   const nativeHash = isSmall ? nativeHashNotNull : nativeHashParam
@@ -27,10 +28,6 @@ export default function NativeInfo({ native: nativeHashParam }: NativeInfoProps)
   const onShare = useCallback(() => {
     copyToClipboard(createShareUrl(`/natives/${nativeHash}`, game))
   }, [ copyToClipboard, nativeHash, game ])
-
-  const onUsageNotFound = useCallback(() => {
-    setUsageNotFound(true)
-  }, [ setUsageNotFound ])
 
   useEffect(() => {
     setUsageNotFound(false)
@@ -152,21 +149,6 @@ export default function NativeInfo({ native: nativeHashParam }: NativeInfoProps)
                   </ListItem>
                 ))}
               </List>
-            </Paper>
-          </div>
-        )}
-
-        {(!usageNotFound && _.includes(settings.sources, NativeSources.DottieDot)) && (
-          <div>
-            <Typography variant="subtitle1" gutterBottom>
-              Script usage
-            </Typography>
-
-            <Paper>
-              <NativeUsage 
-                nativeHash={nativeHash}
-                onNotFound={onUsageNotFound} 
-              />
             </Paper>
           </div>
         )}

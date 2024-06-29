@@ -42,7 +42,7 @@ class CPlusPlusCodeGenerator extends CodeGeneratorBase<CPlusPlusCodeGeneratorSet
   }
 
   transformBaseType(type: string): string {
-    if (!this.settings.useNativeTypes) {
+    if (this.settings.useNativeTypes) {
       return type
     }
 

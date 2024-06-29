@@ -1,8 +1,11 @@
 import { Typography, TypographyProps, Link } from '@mui/material'
 import { memo } from 'react'
+import ReactMarkdown from 'react-markdown'
 import Linkify from 'react-linkify'
 
-export interface NativeCommentProps extends TypographyProps {}
+export interface NativeCommentProps extends TypographyProps {
+  children?: React.ReactNode;
+}
 
 function NativeComment({ children, sx, ...rest }: NativeCommentProps) {
   return (
@@ -21,9 +24,16 @@ function NativeComment({ children, sx, ...rest }: NativeCommentProps) {
           </Link>
         )}
       >
-        {children || 'No comment available.'}
+        {children ? (
+          <ReactMarkdown>
+            {children as string}
+          </ReactMarkdown>
+        ) : (
+          'No description available.'
+        )}
       </Linkify>
     </Typography>
   )
 }
+
 export default memo(NativeComment)

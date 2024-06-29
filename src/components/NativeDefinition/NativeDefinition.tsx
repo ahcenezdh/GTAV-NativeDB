@@ -6,8 +6,8 @@ import CopyableText from '../CopyableText'
 import NativeParamsEx from '../NativeParamsEx'
 import NativeParams from '../NativeParams'
 import { useSettings } from '../../hooks'
-import { toPascalCase } from '../../common'
-import { convertTypeToTS } from '../../code-generation'
+import { toPascalCase, toCamelCase } from '../../common'
+import { convertTypeToTS, convertTypeToLua } from '../../code-generation'
 
 export interface NativeDefinitionProps extends Omit<TypographyProps, 'children'> {
   name         : string
@@ -20,12 +20,10 @@ export interface NativeDefinitionProps extends Omit<TypographyProps, 'children'>
 function NativeDefinition({ name, params, returnType, sx, noWrap = false, nameCopyable = true, ...rest }: NativeDefinitionProps) {
   const { nativeDisplayMode, nativeTypes, displayVoidReturnType } = useSettings()
   const nameWithBreaks = useMemo(() => {
-    if (nativeDisplayMode === 'TS') {
+    if (nativeDisplayMode === 'TS')
+      return toCamelCase(name, '\u200b')
+    if (nativeDisplayMode === 'Lua')
       return toPascalCase(name, '\u200b')
-    }
-    if (nativeDisplayMode === 'Lua') {
-      return toPascalCase(name, '\u200b')
-    }
     return name.replace(/_/g, '_\u200b')
   }, [ name, nativeDisplayMode ])
   const { extensions } = useTheme()
@@ -72,13 +70,13 @@ function NativeDefinition({ name, params, returnType, sx, noWrap = false, nameCo
         </Box>
       )}
 
-      {/* {(nativeDisplayMode === 'Lua' && (displayVoidReturnType || (returnType !== 'void' && returnType !== 'VOID'))) && (
+      {(nativeDisplayMode === 'Lua' && (displayVoidReturnType || (returnType !== 'void' && returnType !== 'VOID'))) && (
         <Box component="span" sx={{ color: extensions.symbolColor }}>
           :
 &nbsp;
           <NativeType popover={!noWrap} type={convertTypeToLua(returnType, nativeTypes)} />
         </Box>
-      )} */}
+      )}
     </Typography>
   )
 }

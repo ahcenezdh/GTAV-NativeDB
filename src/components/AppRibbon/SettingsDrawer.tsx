@@ -131,7 +131,7 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
             </ToggleButtonGroup>
 
 
-            {(settings.nativeDisplayMode === 'TS') && (
+            {(settings.nativeDisplayMode === 'Lua' || settings.nativeDisplayMode === 'TS') && (
               <FormControlLabel
                 control={
                   <Checkbox
@@ -144,7 +144,7 @@ export default function SettingsDrawer({ open, onClose }: SettingsDrawerProps) {
               />
             )}
 
-            {settings.nativeDisplayMode === 'TS' && (
+            {(settings.nativeDisplayMode === 'Lua' || settings.nativeDisplayMode === 'TS') && (
               <FormControlLabel
                 control={
                   <Checkbox

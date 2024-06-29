@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import { Namespace, Native, TypeDefinition } from '../context'
 import LoadAlloc8orNatives from './alloc8or-nativedb'
-import LoadDottieDotAdditionalData from './dottiedot-additional-data'
 import LoadFivemNatives from './fivem-nativedb'
 import LoadSpecialData from './special-data'
 import { Game } from '../context'
@@ -109,20 +108,6 @@ export default class NativeDataLoader {
           gtaHash:    native.gta_hash
         })
       })
-    })
-  }
-
-  async loadDottieDot() {
-    const data = await LoadDottieDotAdditionalData()
-
-    if (!data) {
-      return
-    }
-    
-    Object.keys(data).forEach(hash => {
-      const native = data[hash]
-
-      this.addAdditionalData(hash, { examples: native.examples })
     })
   }
 

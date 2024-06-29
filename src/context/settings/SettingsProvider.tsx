@@ -22,7 +22,7 @@ export const SettingsProvider = memo(function SettingsProvider({ children }: Set
   const [ settings, setSettings ] = useLocalStorageState<Settings>('SettingsProvider-0', {
     defaultValue: {
       theme:                 'system',
-      sources:               [ NativeSources.Alloc8or, NativeSources.DottieDot ],
+      sources:               [ NativeSources.Alloc8or ],
       nativeDisplayMode:     'C',
       nativeOrdering:        'registration',
       nativeTypes:           true,

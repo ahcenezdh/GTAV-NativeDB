@@ -25,7 +25,7 @@ export function convertTypeToTS(type: string, useNativeTypes: boolean, convertHa
     case 'Object': type = 'ObjectEntity'; break
   }
 
-  if (!useNativeTypes) {
+  if (useNativeTypes) {
     return type
   }
 

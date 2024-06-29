@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 import { useSettings } from '../../hooks'
 import { NativeParam } from '../../context'
 import NativeType from '../NativeType'
-import { convertTypeToTS } from '../../code-generation'
+import { convertTypeToTS, convertTypeToLua } from '../../code-generation'
 import { compactParams } from '../../code-generation/CodeGeneratorBase'
 
 export interface NativeParamsProps extends Omit<BoxProps, 'children'> {
@@ -38,6 +38,13 @@ export default function NativeParams({ params, ...rest }: NativeParamsProps) {
             <Fragment>
               :&nbsp;
               <NativeType type={convertTypeToTS(type, nativeTypes)} />
+            </Fragment>
+          )}
+
+          {(nativeDisplayMode === 'Lua') && (
+            <Fragment>
+              :&nbsp;
+              <NativeType type={convertTypeToLua(type, nativeTypes)} />
             </Fragment>
           )}
 

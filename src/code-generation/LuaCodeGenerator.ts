@@ -25,7 +25,7 @@ export function convertTypeToLua(type: string, useNativeTypes: boolean, convertH
     case 'Object': type = 'ObjectEntity'; break
   }
 
-  if (!useNativeTypes) {
+  if (useNativeTypes) {
     return type
   }
 
@@ -66,11 +66,11 @@ class LuaCodeGenerator extends CodeGeneratorBase<LuaCodeGeneratorSettings> {
   private transformReturnType(type: string): string {
     switch (type) {
       case 'Vector2':
-        return '{number, number}'
+        return 'number[]'
       case 'Vector3':
-        return '{number, number, number}'
+        return 'number[]'
       case 'Vector4':
-        return '{number, number, number, number}'
+        return 'number[]'
       case 'string | number':
         return 'number'
     }
@@ -83,13 +83,14 @@ class LuaCodeGenerator extends CodeGeneratorBase<LuaCodeGeneratorSettings> {
   }
 
   addNative(native: CodeGenNative): this {
-    const name = toPascalCase(native.name) // Convert to PascalCase
+    const name = toPascalCase(native.name)
     const params = native.params.map((param) => this.formatParam(param)).join(', ')
     const invokeParams = [ native.hash, ...native.params.map((v) => this.formatInvokeParam(v, this.settings.convertHashes)) ].join(', ')
     const returnType = this.transformReturnType(this.formatType(native.returnType))
     const returnString = returnType === 'void'
       ? ''
       : 'return '
+    const invokeReturn = (returnType === 'void') ? '' : `<${returnType}>`
     const invoker = this.settings.invokeFunction
     const link = `${window.location.origin}/natives/${native.hash}`
 
@@ -99,7 +100,7 @@ class LuaCodeGenerator extends CodeGeneratorBase<LuaCodeGeneratorSettings> {
       .conditional(this.settings.includeNdbLinks, gen => gen.writeComment(link))
       .writeLine(`function ${name}(${params}): ${returnType}`)
       .pushBranch(this.settings.oneLineFunctions)
-      .writeLine(`${returnString}${invoker}(${invokeParams});`)
+      .writeLine(`${returnString}${invoker}${invokeReturn}(${invokeParams});`)
       .popBranchWithComment(`${native.hash} ${native.jhash} ${native.build ? `b${native.build}` : ''}`)
   }
 
@@ -112,15 +113,15 @@ class LuaCodeGenerator extends CodeGeneratorBase<LuaCodeGeneratorSettings> {
   }
 
   protected formatComment(comment: string): string {
-    return `-- ${comment}`
+    return `// ${comment}`
   }
 
   protected getOpeningBracket(): string | null {
-    return null
+    return '{'
   }
 
   protected getClosingBracket(): string | null {
-    return null
+    return '}'
   }
 
   private formatType(type: CodeGenType): string {

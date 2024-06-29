@@ -43,4 +43,9 @@ export function toPascalCase(name: string, joinChar = ''): string {
   return name.toLocaleLowerCase().split('_').map((part,) => upperFirst(part)).join(joinChar)
 }
 
+export function toCamelCase(name: string, joinChar = ''): string {
+  const parts = name.toLocaleLowerCase().split('_')
+  return parts[0] + parts.slice(1).map(part => upperFirst(part)).join(joinChar)
+}
+
 export * from './hashing'
