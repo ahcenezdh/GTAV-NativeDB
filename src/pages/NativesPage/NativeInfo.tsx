@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, IconButton, List, ListItem, ListItemText, Paper, Stack, Tooltip, Typography, useTheme } from '@mui/material'
+import { Box, Button, Dialog, IconButton, List, ListItem, ListItemText, Paper, Stack, Tooltip, Typography } from '@mui/material'
 import { LinkSharp as ShareIcon, OpenInNewSharp as OpenInNewSharpIcon } from '@mui/icons-material'
 import _ from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
@@ -8,7 +8,6 @@ import { useCopyToClipboard, useIsSmallDisplay, useLastNotNull, useNative, useSe
 import { Game, NativeSources, SelectedGameProvider, useSelectedGameContext } from '../../context'
 import NativeNotFound from './NativeNotFound'
 import NoNativeSelected from './NoNativeSelected'
-import Giscus from '@giscus/react'
 
 interface NativeInfoProps {
   native?: string 
@@ -22,7 +21,6 @@ export default function NativeInfo({ native: nativeHashParam }: NativeInfoProps)
   const nativeHash = isSmall ? nativeHashNotNull : nativeHashParam
   const native = useNative(nativeHash ?? '')
   const copyToClipboard = useCopyToClipboard()
-  const theme = useTheme()
   const game = useSelectedGameContext()
   const [ showGta5Definition, setShowGta5Definition ] = useState<string | false>(false)
 
@@ -183,30 +181,6 @@ export default function NativeInfo({ native: nativeHashParam }: NativeInfoProps)
             GTA5 Native Definition
           </Button>
         )}
-
-        <div>
-          <Typography variant="subtitle1" gutterBottom>
-            Comments
-          </Typography>
-
-          <Paper sx={{ p: 2 }}>
-            <Giscus
-              category="Native Comments"
-              categoryId="DIC_kwDOEPVfds4CUoSH"
-              emitMetadata="0"
-              id="comments"
-              inputPosition="top"
-              lang="en"
-              loading="lazy"
-              mapping="specific"
-              reactionsEnabled="1"
-              repo="DottieDot/GTAV-NativeDB"
-              repoId="MDEwOlJlcG9zaXRvcnkyODQ1MTYyMTQ="
-              term={native.hash}
-              theme={theme.palette.mode}
-            />
-          </Paper>
-        </div>
       </Stack>
 
       <Dialog
