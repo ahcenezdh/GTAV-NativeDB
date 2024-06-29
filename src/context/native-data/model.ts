@@ -19,9 +19,6 @@ export interface Native {
   apiSet?: string
   examples?: CodeExample[]
 
-  // Special data
-  schComment?: string
-
   // RDR3
   gtaHash?: string
 }

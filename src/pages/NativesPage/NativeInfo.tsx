@@ -104,20 +104,6 @@ export default function NativeInfo({ native: nativeHashParam }: NativeInfoProps)
           />
         </Paper>
 
-        {native.schComment && (
-          <div>
-            <Typography variant="subtitle1" gutterBottom>
-              Rockstar Description
-            </Typography>
-
-            <Paper sx={{ p: 2 }}>
-              <NativeComment variant="body2">
-                {native.schComment}
-              </NativeComment>
-            </Paper>
-          </div>
-        )}
-
         {native.comment && (
           <div>
             <Typography variant="subtitle1" gutterBottom>

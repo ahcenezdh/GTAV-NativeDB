@@ -142,7 +142,6 @@ export default class NativeDataLoader {
           // Alloc8or's native db has a typo for FORCE_SUBMARINE_NEUTRAL_BUOYANCY
           // Technically the one with the typo is correct? But in the scripts it's used without the typo.
           name:       native.name,
-          schComment: native.sch_comment,
           returnType: native.return_type,  
           params:     native.params.map(p => ({
             type:         p.type,
